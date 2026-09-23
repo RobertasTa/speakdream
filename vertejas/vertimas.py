@@ -27,8 +27,9 @@ POROS = {
     ('lt', 'de'): ('Helsinki-NLP/opus-mt-tc-bible-big-bat-deu_eng_nld', '>>deu<<'),
     ('en', 'ru'): ('Helsinki-NLP/opus-mt-en-ru', None),
     ('ru', 'en'): ('Helsinki-NLP/opus-mt-ru-en', None),
-    ('de', 'ru'): ('Helsinki-NLP/opus-mt-de-ru', None),
-    ('ru', 'de'): ('Helsinki-NLP/opus-mt-ru-de', None),
+    # ⛔ de↔ru tiesioginių NĖRA: `opus-mt-de-ru` / `opus-mt-ru-de` HF neegzistuoja (tikrinta
+    # 2026-09-23, grupinių gmw↔zle irgi nėra). Buvusios dvi eilutės čia laužė „Paruošti darbui";
+    # be jų pora eina per TILTAS (anglų), kaip kinų.
     ('en', 'de'): ('Helsinki-NLP/opus-mt-en-de', None),
     ('de', 'en'): ('Helsinki-NLP/opus-mt-de-en', None),
     ('zh', 'en'): ('Helsinki-NLP/opus-mt-zh-en', None),

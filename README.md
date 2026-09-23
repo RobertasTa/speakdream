@@ -54,7 +54,8 @@ Made with care, given with joy. 🎁
   program takes the language from Windows; change it in the gear menu.
 - **Conversation:** Lithuanian, Russian, English, German. Lithuanian ↔ Russian
   goes through a direct model (not through English); English and German are
-  direct as well.
+  direct as well. German ↔ Russian has no direct model anywhere, so it takes
+  a step through English.
 - **Ears:** for Lithuanian — *Paprika*, a Whisper model fine-tuned for Lithuanian
   by Kristijonas Jakubsonas; for other languages — Whisper (faster-whisper).
 - **Voices:** Piper. The Lithuanian voice is *Reginutė* — trained by us and

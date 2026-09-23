@@ -55,7 +55,7 @@ in parallel **→ transcript files + audio recording**.
 - **Punctuation** is restored between the ears and the translator. This matters more than it
   sounds: measured, it moved translation quality from 4.12 to 5.00, because without a full
   stop the translator misreads where a sentence ends.
-- **Translation** is Helsinki NLP's OPUS-MT (Marian models). There are 14 direct pairs; when
+- **Translation** is Helsinki NLP's OPUS-MT (Marian models). There are 12 direct pairs (German ↔ Russian is not one of them — no such model exists); when
   no direct pair exists, the program goes **through English in two steps**.
 - **Voice** is Piper. The Lithuanian voice Reginutė is the authors' own work and part of the
   official Piper catalogue (`rhasspy/piper-voices`); it is downloaded on **Prepare** like

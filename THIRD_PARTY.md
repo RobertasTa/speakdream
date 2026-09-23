@@ -59,7 +59,7 @@ Licenses taken from each package's own metadata or project page.
 |---|---|---|---|
 | `RobertasTa/paprika-whisper-lt-v3-ct2-int8` (Paprika) | Kristijonas Jakubsonas; CTranslate2 conversion by the authors | CC BY 4.0 | Lithuanian ears |
 | Whisper `medium` (via faster-whisper) | OpenAI | MIT | ears for other languages, language detection |
-| `Helsinki-NLP/opus-mt-tc-base-zle-bat`, `…-bat-zle`, `…-tc-big-en-lt`, `…-tc-big-lt-en`, `…-tc-bible-big-deu_eng_fra_por_spa-bat`, `…-bat-deu_eng_nld`, `opus-mt-en-ru`, `ru-en`, `de-ru`, `ru-de`, `en-de`, `de-en`, `zh-en`, `en-zh` | University of Helsinki (OPUS-MT) | CC BY 4.0 | translation |
+| `Helsinki-NLP/opus-mt-tc-base-zle-bat`, `…-bat-zle`, `…-tc-big-en-lt`, `…-tc-big-lt-en`, `…-tc-bible-big-deu_eng_fra_por_spa-bat`, `…-bat-deu_eng_nld`, `opus-mt-en-ru`, `ru-en`, `en-de`, `de-en`, `zh-en`, `en-zh` | University of Helsinki (OPUS-MT) | CC BY 4.0 | translation |
 | `1-800-BAD-CODE/xlm-roberta_punctuation_fullstop_truecase` | 1-800-BAD-CODE | Apache-2.0 | punctuation and casing before translation |
 | `punct_restore` (word-preserving wrapper) | Kristijonas Jakubsonas | Apache-2.0 | same |
 | Piper voices from `rhasspy/piper-voices` (e.g. `ru_RU-ruslan-medium`) | Rhasspy / voice authors | per voice — see each voice's MODEL_CARD | Russian, English, German voices |
