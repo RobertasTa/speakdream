@@ -1,0 +1,18 @@
+# Versions as used for release 1.0.0 (Python 3.12, Windows x64).
+# torch: the CUDA build (2.11.0+cu128) — the packaged program takes its CUDA
+# libraries from torch\lib; a CPU-only torch would still run, but on the processor.
+PyQt6==6.11.0
+torch==2.11.0
+transformers==5.17.0
+tokenizers==0.23.2
+sentencepiece==0.2.2
+ctranslate2==4.8.2
+faster-whisper==1.2.1
+onnxruntime==1.30.0
+piper-tts==1.8.0
+sounddevice==0.5.6
+soundfile==0.14.0
+huggingface_hub==1.31.0
+numpy==2.5.3
+punctuators==0.0.7
+pyinstaller==6.22.3

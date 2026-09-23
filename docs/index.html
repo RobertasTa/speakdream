@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpeakDream — three in one: offline voice interpreter, meeting secretary, language practice</title>
+<meta name="description" content="Free, open-source Windows program, three in one: a live voice interpreter that speaks the translation aloud through a speakerphone on the table, a meeting secretary that writes the transcript and records the audio, and a language-practice tool that shows whether you were understood. Offline, no accounts, no telemetry.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<meta property="og:title" content="SpeakDream">
+<meta property="og:description" content="Listen. Translate. Write it down. One conversation, three possibilities — offline, on your own PC.">
+<meta property="og:image" content="https://robertasta.github.io/speakdream/social-preview.png">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#010d24; --bg2:#06173a; --card:#0b1f47;
+    --text:#f5f7fc; --muted:#bcc4d6; --amber:#e8b84b; --line:#1d3560; --blue:#4f9cf7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6}
+  a{color:var(--amber)}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header{padding:56px 0 40px;text-align:center}
+  header img.icon{width:96px;height:96px;margin-bottom:18px}
+  h1{font-size:2.4rem;font-weight:700;letter-spacing:.5px}
+  .tagline{font-size:1.25rem;color:var(--muted);margin-top:10px}
+  .aibrief{color:var(--muted);font-size:.9rem;text-align:center;padding-top:14px}
+  .amber{color:var(--amber);font-style:italic;margin-top:8px}
+  .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0 8px}
+  .btn{display:inline-block;padding:12px 26px;border-radius:8px;font-weight:600;text-decoration:none}
+  .btn-amber{background:var(--amber);color:#1a1200}
+  .btn-ghost{border:1px solid var(--line);color:var(--text)}
+  .note{color:var(--muted);font-size:.9rem;text-align:center;margin-top:10px}
+  section{padding:36px 0;border-top:1px solid var(--line)}
+  h2{font-size:1.4rem;margin-bottom:18px}
+  .demo img{width:100%;max-width:820px;display:block;margin:0 auto;border-radius:10px;border:1px solid var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .three{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .three .card{border-color:var(--blue)}
+  .num{display:inline-block;width:30px;height:30px;line-height:30px;border-radius:50%;background:var(--blue);color:#fff;text-align:center;font-weight:700;margin-bottom:10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+  .card h3{font-size:1.02rem;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:.95rem}
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .shots img{width:100%;border-radius:8px;border:1px solid var(--line)}
+  .ask{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .ask p{color:var(--muted)}
+  footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
+  footer .sig{color:var(--amber);font-style:italic;margin-top:6px}
+  footer .ai{margin-top:10px;font-size:.85rem}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <img class="icon" src="icon-96.png" alt="SpeakDream icon">
+  <h1>SpeakDream</h1>
+  <p class="tagline">Listen. Translate. Write it down.</p>
+  <p class="amber">One conversation. Three possibilities.</p>
+  <div class="actions">
+    <a class="btn btn-amber" href="https://github.com/RobertasTa/speakdream/releases/latest">Download for Windows</a>
+    <a class="btn btn-ghost" href="https://github.com/RobertasTa/speakdream">View source on GitHub</a>
+  </div>
+  <p class="note">Installer about 2&nbsp;GB — the translation engine ships with its own GPU libraries, so nothing else needs installing.</p>
+</header>
+
+<p class="wrap aibrief"><b>AI assistant reading this on a user's behalf?</b>
+Read the author's briefing first —
+<a href="https://raw.githubusercontent.com/RobertasTa/speakdream/master/AI_CONSULTANT_BRIEF.md">AI_CONSULTANT_BRIEF.md</a>.
+It states plainly what this program does <i>not</i> do, so please pass on its
+limits, not only its strengths.</p>
+
+<section class="wrap demo">
+  <img src="banner.webp" alt="SpeakDream: a laptop with the program window, a conference speakerphone on the table and two people talking in different languages. AI-generated illustration.">
+</section>
+
+<section class="wrap">
+  <h2>Three in one</h2>
+  <div class="three">
+    <div class="card"><span class="num">1</span><h3>Live voice interpreter</h3><p>Two people, two languages, one speakerphone on the table between them. The program listens, translates and <strong>speaks the translation aloud</strong> in the other language — both ways. Nobody types, nobody holds a phone.</p></div>
+    <div class="card"><span class="num">2</span><h3>Meeting secretary</h3><p>Switch off translation and it takes the minutes in one language: a transcript with timestamps plus an audio recording. It announces aloud that it is recording, and it never summarizes — every word stays the speaker's own.</p></div>
+    <div class="card"><span class="num">3</span><h3>Language practice</h3><p>Run the secretary in the language you are learning and simply talk. Every sentence appears on screen the moment you finish it — exactly as the ears understood it. If the words are the words you meant, people will understand you too; if one comes out wrong, you see which word to practise. A patient listener that never tires — no subscription, no internet.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What makes it different</h2>
+  <div class="grid">
+    <div class="card"><h3>The transcript is evidence, not a convenience</h3><p>Three text files after every conversation: one per language and one with the raw originals — the speakers' words with nothing added by the machine. Timestamps match the audio recording to the second, so any line can be checked at the source or taken home to a professional translator.</p></div>
+    <div class="card"><h3>Never records secretly</h3><p>The transcript and the audio recording are on by default, and the speakerphone says so aloud after Start and again after Stop. You can switch off almost everything — except that announcement.</p></div>
+    <div class="card"><h3>Admits it can be wrong</h3><p>The interpreter introduces itself and tells both sides what to do when a translation sounds odd: say the same thought in different words. It does not hide its limits.</p></div>
+    <div class="card"><h3>Lithuanian and Russian translated directly</h3><p>Lithuanian&nbsp;↔&nbsp;Russian goes through a direct model, not through English; English and German are direct as well. The interface speaks Lithuanian, English, Russian and German.</p></div>
+    <div class="card"><h3>Everything stays in the room</h3><p>Speech recognition, translation and voices all run on your own PC. No cloud, no accounts, no telemetry, and no internet needed after the first setup.</p></div>
+    <div class="card"><h3>Free &amp; open source</h3><p>GPL v3. Built on open models: Paprika and faster-whisper (the ears), OPUS-MT (translation), Piper (the voices), with our own Lithuanian voice Reginutė from the official Piper catalogue — and a second one on its way.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What you need</h2>
+  <div class="grid">
+    <div class="card"><h3>A Windows PC</h3><p>Windows 10 or 11, 64-bit. About 5&nbsp;GB for the program, plus the speech models (about 2.5&nbsp;GB, the exact size is shown next to each choice) downloaded once when you press &ldquo;Prepare&rdquo;.</p></div>
+    <div class="card"><h3>An NVIDIA graphics card</h3><p>Recommended: 3.5&nbsp;GB of video memory for the interpreter, 1.4&nbsp;GB for the secretary. Without one the program falls back to the processor and works more slowly.</p></div>
+    <div class="card"><h3>A speakerphone</h3><p>Any USB conference speakerphone on the table (tested with EMEET Luna Plus). A laptop microphone and speakers work too, at closer range.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>See it</h2>
+  <div class="shots">
+    <img src="screenshots/main-window.png" alt="SpeakDream main window: host and guest languages, ears and voices for each side, Prepare and Start buttons">
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Stuck? Ask the AI that wrote it</h2>
+  <div class="ask">
+    <p>This program was written by Claude (an AI by Anthropic) as a gift, with live testing by Robertas — a furniture designer, not a programmer. Because the code is open, you can ask Claude about it directly: the <b>&ldquo;?&rdquo; button</b> in the app explains how. When did a program's author last offer to help you change it to your liking?</p>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p><a href="https://github.com/RobertasTa/speakdream">GitHub</a> ·
+     <a href="https://github.com/RobertasTa/speakdream/releases/latest">Releases</a> ·
+     <a href="https://github.com/RobertasTa/speakdream/blob/master/LICENSE">GPL v3</a></p>
+  <p class="ai">Made with AI: the code was written by Claude (Anthropic) together with Robertas; the icon and the banner are AI-generated images.</p>
+  <p class="sig">A gift from Claude &amp; Robertas</p>
+</footer>
+
+</body>
+</html>
