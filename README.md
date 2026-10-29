@@ -48,6 +48,14 @@ Made with care, given with joy. 🎁
    exactly which word to practise. A patient listener that never tires, needs
    no subscription and no internet. Tested by the author in real practice.
 
+## Every voice tuned to your ear
+
+New in 1.1.0. The ⚙ next to each side's *Speed* slider opens a seven-band
+equalizer for the voice chosen there, from depth at 125 Hz to the s sounds at
+8 kHz. Let go of a slider and a sample plays at once, so you tune by ear, not
+by numbers. Each voice remembers its own settings, and the same window has the
+speed slider too. A flat equalizer leaves the voice exactly as it was made.
+
 ## Languages
 
 - **Interface:** Lithuanian, English, Russian, German. On first start the
