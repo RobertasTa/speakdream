@@ -23,8 +23,8 @@ ZODYNAS = {
         'Transkriptordner öffnen…',
     'Atšaukti':
         'Abbrechen',
-    'Ausys — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (MIT); lietuviškas balsas Reginutė\nVariklis — faster-whisper (MIT)':
-        'Spracherkennung — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nÜbersetzung — OPUS-MT, Universität Helsinki (CC BY 4.0)\nStimme — Piper (MIT); Litauische Stimme Reginutė\nEngine — faster-whisper (MIT)',
+    'Ausys — Paprika ir kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (GPL-3.0); lietuviški balsai Reginutė ir Ingutė\nVariklis — faster-whisper, onnx-asr (MIT); ekvalaizeris — pedalboard (GPL-3.0)':
+        'Spracherkennung — Paprika und kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nÜbersetzung — OPUS-MT, Universität Helsinki (CC BY 4.0)\nStimme — Piper (GPL-3.0); Litauische Stimmen Reginutė und Ingutė\nEngine — faster-whisper, onnx-asr (MIT); Equalizer — pedalboard (GPL-3.0)',
     'Ausys: Paprika — Kristijonas Jakubsonas':
         'Spracherkennung: Paprika — Kristijonas Jakubsonas',
     'Baigti':

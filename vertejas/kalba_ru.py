@@ -23,8 +23,8 @@ ZODYNAS = {
         'Открыть папку стенограмм…',
     'Atšaukti':
         'Отмена',
-    'Ausys — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (MIT); lietuviškas balsas Reginutė\nVariklis — faster-whisper (MIT)':
-        'Слух — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nПеревод — OPUS-MT, Хельсинкский университет (CC BY 4.0)\nГолос — Piper (MIT); литовский голос Reginutė\nДвижок — faster-whisper (MIT)',
+    'Ausys — Paprika ir kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (GPL-3.0); lietuviški balsai Reginutė ir Ingutė\nVariklis — faster-whisper, onnx-asr (MIT); ekvalaizeris — pedalboard (GPL-3.0)':
+        'Слух — Paprika и kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nПеревод — OPUS-MT, Хельсинкский университет (CC BY 4.0)\nГолос — Piper (GPL-3.0); литовские голоса Reginutė и Ingutė\nДвижок — faster-whisper, onnx-asr (MIT); эквалайзер — pedalboard (GPL-3.0)',
     'Ausys: Paprika — Kristijonas Jakubsonas':
         'Слух: Paprika — Kristijonas Jakubsonas',
     'Baigti':

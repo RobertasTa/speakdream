@@ -69,5 +69,10 @@ Licenses taken from each package's own metadata or project page.
 | `punct_restore` (word-preserving wrapper) | Kristijonas Jakubsonas | Apache-2.0 | same |
 | Piper voices from `rhasspy/piper-voices` (e.g. `ru_RU-ruslan-medium`) | Rhasspy / voice authors | per voice — see each voice's MODEL_CARD | Russian, English, German voices |
 | `lt_LT-reginute1-medium` (Reginutė) from `rhasspy/piper-voices`, downloaded on first use | Robertas & Claude (trained on the LIEPA corpus) | CC BY 4.0 | Lithuanian voice |
+| `lt_LT-ingute-medium` (Ingutė, since 1.1.0) from `rhasspy/piper-voices`, downloaded on first use | Robertas & Claude (grown from the Reginutė model with the authors' Python tools) | NewGenLTU OpenRAIL-D — full text in [`vertejas/balsai/LICENSE-VOICE-ingute`](vertejas/balsai/LICENSE-VOICE-ingute) | second Lithuanian voice |
+
+The program downloads both Lithuanian voices from the Piper catalogue; the files are identical to
+ours (SHA256 `0417c4ef…986ee` Reginutė, `31bdf1df…41d8` Ingutė). If you redistribute Ingutė, keep
+`LICENSE-VOICE` with it and state the origin.
 
 Silero VAD (MIT) is used through faster-whisper for voice activity detection.

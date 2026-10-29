@@ -437,6 +437,12 @@ class Pasnekovas(QWidget):
         ga.addWidget(self.garso_reiksme)
         ga.addSpacing(18 + ga.spacing())    # dantračio vieta — kad abu slankikliai būtų vienodi
         v.addLayout(ga)
+        # ⭐ 10-29 Robertas: „toks jausmas, kad garso slankiklis nereaguoja". Reaguoja (pamatuota
+        # −31 → −19 dBFS), bet frazė sugeneruojama VISA iš anksto — pajudinus slankiklį grojant
+        # pokytis išgirstamas tik kitoje frazėje. Todėl atleidus — iškart ▸ pavyzdys („suki ir
+        # girdi", kaip ekvalaizeryje). Pokalbio metu jis nesileidžia: `pabandyk_balsa` tada tyli.
+        self.greitis.sliderReleased.connect(lambda: self.balsas_bandomas.emit())
+        self.garsas.sliderReleased.connect(lambda: self.balsas_bandomas.emit())
         self.kalba.currentIndexChanged.connect(self._kalba_pakeista)
         self.balsas.currentIndexChanged.connect(self._balsas_pakeistas)
         self.uzpildyk_ausis()
@@ -1097,7 +1103,8 @@ class Langas(QWidget):
         lay = QVBoxLayout(d)
         lay.setContentsMargins(18, 16, 18, 14)
         lay.setSpacing(8)
-        p = QLabel('SpeakDream')
+        from versija import VERSIJA
+        p = QLabel('SpeakDream ' + VERSIJA)
         p.setStyleSheet('font-size: 18px; font-weight: bold; color: #ffffff;')
         lay.addWidget(p)
         lay.addWidget(QLabel(K.t('Gyvas pokalbio vertėjas be interneto —\n'
@@ -1111,10 +1118,12 @@ class Langas(QWidget):
                         'Jūsų pokalbis yra jūsų — programa jį tik išverčia.'))
         di.setStyleSheet('color: #E8B84B; font-size: 12px;')
         lay.addWidget(di)
-        s = QLabel(K.t('Ausys — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\n'
+        # 10-29: „Piper (MIT)" buvo klaida nuo 1.0.0 — piper-tts yra GPL-3.0 (THIRD_PARTY.md).
+        s = QLabel(K.t('Ausys — Paprika ir kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n'
+                       '   GigaAM v3, SberDevices (MIT)\n'
                        'Vertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\n'
-                       'Balsas — Piper (MIT); lietuviškas balsas Reginutė\n'
-                       'Variklis — faster-whisper (MIT)'))
+                       'Balsas — Piper (GPL-3.0); lietuviški balsai Reginutė ir Ingutė\n'
+                       'Variklis — faster-whisper, onnx-asr (MIT); ekvalaizeris — pedalboard (GPL-3.0)'))
         s.setStyleSheet('color: #9a9a9a; font-size: 12px;')
         lay.addWidget(s)
         n = QLabel(K.t('Kūrėjo puslapis: <a href="https://github.com/RobertasTa" '

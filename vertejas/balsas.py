@@ -29,12 +29,15 @@ from piper import PiperVoice, SynthesisConfig
 # 0417C4EF…86EE, PR #103), o konfigas — MŪSŲ `espeak` kopija (katalogo neužsikrauna).
 REGINUTE_MODELIS = 'lt/lt_LT/reginute1/medium/lt_LT-reginute1-medium.onnx'
 REGINUTE_JSON = os.path.join(CIA, 'balsai', 'lt_LT-reginute1-medium.onnx.json')
-INGUTE_MODELIS = os.path.join(CIA, 'balsai', 'lt_LT-ingute-medium.onnx')
+# ⭐ 2026-10-29: Ingutė GRĄŽINTA (Roberto: „grąžink man Ingutę, kad galėčiau rinktis").
+# Nuo 10-20 ji Piper kataloge (PR #110) — modelis imamas iš ten, kaip Reginutės (tas pats
+# failas, SHA256 31bdf1df…41d8), o konfigas — mūsų `espeak` kopija.
+INGUTE_MODELIS = 'lt/lt_LT/ingute/medium/lt_LT-ingute-medium.onnx'
 INGUTE_JSON = os.path.join(CIA, 'balsai', 'lt_LT-ingute-medium.onnx.json')
-# v1.0.0 — tik Reginutė (Roberto sprendimas 09-23: Ingutė ateis su savo publikavimu, kartu
-# nauja programos versija). Grąžinti Ingutę = įrašyti ją atgal į šiuos tris žodynus.
-MUSU_BALSAI = {'lt': [('lt_LT-reginute1-medium', 'reginutė (medium)')]}
-MUSU_FAILAI = {'lt_LT-reginute1-medium': (REGINUTE_MODELIS, REGINUTE_JSON)}
+MUSU_BALSAI = {'lt': [('lt_LT-reginute1-medium', 'reginutė (medium)'),
+                      ('lt_LT-ingute-medium', 'ingutė (medium)')]}
+MUSU_FAILAI = {'lt_LT-reginute1-medium': (REGINUTE_MODELIS, REGINUTE_JSON),
+               'lt_LT-ingute-medium': (INGUTE_MODELIS, INGUTE_JSON)}
 NUMATYTI = {'lt': 'lt_LT-reginute1-medium', 'ru': 'ru_RU-ruslan-medium',
             'en': 'en_US-lessac-medium', 'de': 'de_DE-thorsten-medium'}
 # Ingutės tempas: aklas pasirinkimas iš trijų (1,00 / 1,15 / 1,30). Buvęs 1,30 buvo

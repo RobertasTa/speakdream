@@ -33,9 +33,19 @@ SPRENDIMAI (dalis paveldeta is Diktuokles `Diktuokle.spec`, dviracio neieskom):
   * Ikona — `vertejas/SpeakDream.ico`, is Roberto GPT paveikslo, kirpta pagal geometrija
     (`_ikona\\kirpk_kvadrata.py`, 2026-09-21). Paketo katalogas ir exe — `SpeakDream`.
 """
+import re
+
 from PyInstaller.utils.hooks import collect_all, collect_submodules
 
 KATALOGAS = "vertejas"
+
+# ⛔ 2026-10-29: versija programoje (`vertejas/versija.py`, rodoma „Apie programą") ir
+# instaliatoriuje (`.iss` AppVersion) turi sutapti — kitaip exe NESTATOMAS.
+_v_kode = re.search(r"VERSIJA = '([^']+)'", open(f"{KATALOGAS}/versija.py", encoding="utf-8").read()).group(1)
+_v_iss = re.search(r'#define AppVersion\s+"([^"]+)"',
+                   open("_instaliatorius/SpeakDream.iss", encoding="utf-8-sig").read()).group(1)
+if _v_kode != _v_iss:
+    raise SystemExit("VERSIJOS NESUTAMPA: versija.py %s, SpeakDream.iss %s" % (_v_kode, _v_iss))
 
 # torch itraukiamas VISAS: ji tempia `transformers` Marian modeliai (vertimas.py).
 # ⚠️ Cia jis GEROKAI storesnis nei Diktuokleje (ten 0,53 GB): sioje aplinkoje tai CUDA
@@ -78,6 +88,10 @@ a = Analysis(
         # 2026-09-23 v1.0.0: tik Reginutes konfigas (modelis — is Piper katalogo). Ingutes
         # .onnx NEDEDAM, kol ji nepublikuota; grazinant — vel visas `balsai` katalogas.
         (f"{KATALOGAS}/balsai/lt_LT-reginute1-medium.onnx.json", "balsai"),
+        # 2026-10-29 (1.1.0): Ingutė grąžinta. Modelis — iš Piper katalogo, kaip Reginutės;
+        # pakete tik mūsų konfigas ir licencija, kurią platinant privaloma perduoti.
+        (f"{KATALOGAS}/balsai/lt_LT-ingute-medium.onnx.json", "balsai"),
+        (f"{KATALOGAS}/balsai/LICENSE-VOICE-ingute", "balsai"),
     ] + torch_d + tr_d + ct2_d + ort_d + fw_d + hf_d + sp_d + piper_d + sd_d + sf_d
       + oa_d + pb_d,
     hiddenimports=(
@@ -87,7 +101,7 @@ a = Analysis(
         ["kalba", "kalba_en", "kalba_ru", "kalba_de",
          "ausys", "balsas", "frazes", "garsas", "garso_irasas",
          "langas", "nustatymai", "skyryba", "stenograma", "variklis", "vertimas",
-         "onnx_ausys", "ekvalaizeris", "ekvalaizerio_langas", "pedalboard_native"]
+         "onnx_ausys", "ekvalaizeris", "ekvalaizerio_langas", "pedalboard_native", "versija"]
         + torch_h + tr_h + ct2_h + ort_h + fw_h + hf_h + sp_h + piper_h + sd_h + sf_h
         + oa_h + pb_h
         + collect_submodules("PyQt6")

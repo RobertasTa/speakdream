@@ -23,8 +23,8 @@ ZODYNAS = {
         'Open transcript folder…',
     'Atšaukti':
         'Cancel',
-    'Ausys — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (MIT); lietuviškas balsas Reginutė\nVariklis — faster-whisper (MIT)':
-        'Ears — Paprika, Kristijonas Jakubsonas (CC BY 4.0)\nTranslation — OPUS-MT, University of Helsinki (CC BY 4.0)\nVoice — Piper (MIT); Lithuanian voice Reginutė\nEngine — faster-whisper (MIT)',
+    'Ausys — Paprika ir kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nVertimas — OPUS-MT, Helsinkio universitetas (CC BY 4.0)\nBalsas — Piper (GPL-3.0); lietuviški balsai Reginutė ir Ingutė\nVariklis — faster-whisper, onnx-asr (MIT); ekvalaizeris — pedalboard (GPL-3.0)':
+        'Ears — Paprika and kmynas, Kristijonas Jakubsonas (CC BY 4.0);\n   GigaAM v3, SberDevices (MIT)\nTranslation — OPUS-MT, University of Helsinki (CC BY 4.0)\nVoice — Piper (GPL-3.0); Lithuanian voices Reginutė and Ingutė\nEngine — faster-whisper, onnx-asr (MIT); equalizer — pedalboard (GPL-3.0)',
     'Ausys: Paprika — Kristijonas Jakubsonas':
         'Ears: Paprika — Kristijonas Jakubsonas',
     'Baigti':
@@ -230,9 +230,9 @@ ZODYNAS = {
     'Whisper large — tiksliausios':
         'Whisper large — most accurate',
     'LT ausys — lietuviškos, be vaizdo plokštės':
-        'LT ausys — Lithuanian, no graphics card needed',
+        'LT ausys — Lithuanian, no GPU needed',
     'GigaAM — rusiškos, be vaizdo plokštės':
-        'GigaAM — Russian, no graphics card needed',
+        'GigaAM — Russian, no GPU needed',
     'Gylis':
         'Depth',
     'Šiluma':

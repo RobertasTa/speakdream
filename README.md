@@ -62,9 +62,9 @@ Made with care, given with joy. 🎁
   Jakubsonas's *kmynas*) in Lithuanian and *GigaAM* in Russian. Both run on the
   processor, write their own punctuation and are faster than Paprika on a
   graphics card. Whisper ears stay selectable.
-- **Voices:** Piper. The Lithuanian voice is *Reginutė* — trained by us and
-  now part of the official Piper voice catalogue; a second Lithuanian voice is
-  on its way. A ▸ button next to each voice lets you hear it before you choose,
+- **Voices:** Piper. Two Lithuanian voices, both ours and both in the official
+  Piper voice catalogue: *Reginutė*, and since 1.1.0 *Ingutė*, grown from the
+  Reginutė model with our Python tools. A ▸ button next to each voice lets you hear it before you choose,
   and the ⚙ next to *Speed* (new in 1.1.0) opens an equalizer for the chosen
   voice — seven bands, remembered per voice.
 - Adding a language: run `prideti_kalba.py <two-letter code>` in the program

@@ -67,7 +67,10 @@ in parallel **→ transcript files + audio recording**.
   no direct pair exists, the program goes **through English in two steps**.
 - **Voice** is Piper. The Lithuanian voice Reginutė is the authors' own work and part of the
   official Piper catalogue (`rhasspy/piper-voices`); it is downloaded on **Prepare** like
-  every other voice. Versions 1.0.0 and 1.1.0 have only this one Lithuanian voice.
+  every other voice. Version 1.0.0 had only this one Lithuanian voice; since 1.1.0 there is a
+  second one, **Ingutė** — grown from the Reginutė model with the authors' Python tools, also
+  in the official Piper catalogue. Her licence is NewGenLTU OpenRAIL-D: free to use, commercial
+  use allowed; whoever passes her on must pass on `LICENSE-VOICE` and state the origin.
 - **Equalizer (since 1.1.0)**: the ⚙ next to each side's Speed slider opens a 7-band equalizer
   (125 Hz – 8 kHz, ±12 dB) for **the voice currently chosen** — settings are remembered per
   voice. The same window has the speed slider. A flat equalizer leaves the sound untouched.
@@ -219,7 +222,7 @@ recognises their own language in a list they otherwise cannot read.
 |---|---|
 | **Pauzė (Pause)** | How much silence means "this person has finished a thought". Adjustable **during** the conversation — some people pause briefly, others at length |
 | **Greitis (Speed)** | Speaking rate, **separately for each side**. Added because one guest found the Russian voice too fast |
-| **Garsas (Volume)** | Per side, ±6 dB. The five built-in voices are already levelled to the same loudness; this slider is for the **room**, not for fixing the voices |
+| **Garsas (Volume)** | Per side, ±6 dB. The five built-in voices are already levelled to the same loudness; this slider is for the **room**, not for fixing the voices. A phrase is made whole before it plays, so moving the slider changes the **next** phrase; since 1.1.0 letting go of it (or of Speed) plays a sample at once |
 | **⚙ Ekvalaizeris (Equalizer)** | Next to Speed (1.1.0). Seven bands for the **chosen voice**, remembered per voice; releasing a slider plays a sample. Its speed slider is the same as the main one |
 | **Prisistatyti / Padėkoti** | Separate lines for host and guest — often only the guest needs the explanation |
 | **Rašyti stenogramą** | On by default. Forgetting to switch it on loses the conversation; forgetting to switch it off only leaves a file |
