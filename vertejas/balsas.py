@@ -264,14 +264,22 @@ class Balsai:
         self._balsai[kalba] = Balsas(raktas, kalba)
         return self._balsai[kalba]
 
-    def sakyk(self, kalba: str, tekstas: str, greitis: float = 1.0, garsas: float = 1.0):
+    def sakyk(self, kalba: str, tekstas: str, greitis: float = 1.0, garsas: float = 1.0,
+              eq=None):
         """`garsas` — vartotojo slankiklis (09-18), ATSKIRAS nuo balsų sulyginimo.
 
         Sulyginimas (`STIPRINIMAI`) yra tai, kas paverčia visus balsus vienodai garsiais;
         šitas daugiklis — kiek žmogus nori garsiau ar tyliau ŠITAM kambariui. Todėl jie
         dauginami, o ne vienas kitą pakeičia.
+
+        `eq` — to balso ekvalaizeris (10-29, `ekvalaizeris.py`); uždedamas ČIA, vienoje vietoje
+        ir pokalbiui, ir ▸ perklausai. Lygus ar None — banga nepaliesta.
         """
         b = self._balsai.get(kalba)
         if b is None:
             return np.zeros(0, dtype='float32'), 22050
-        return b.sakyk(tekstas, greitis, garsas), b.daznis
+        g = b.sakyk(tekstas, greitis, garsas)
+        if eq:
+            import ekvalaizeris
+            g = ekvalaizeris.apdorok(g, b.daznis, eq)
+        return g, b.daznis

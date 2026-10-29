@@ -17,6 +17,8 @@ ZODYNAS = {
         'About…',
     'Atsisveikinu…':
         'Saying goodbye…',
+    'Atstatyti':
+        'Reset',
     'Atverti stenogramų katalogą…':
         'Open transcript folder…',
     'Atšaukti':
@@ -29,8 +31,14 @@ ZODYNAS = {
         'End',
     'Balsas:':
         'Voice:',
+    'Balso numatytasis greitis (1,00×)':
+        "The voice's default speed (1.00×)",
     'Balso paleisti nepavyko: %s':
         'Could not play the voice: %s',
+    'Ekvalaizeris':
+        'Equalizer',
+    'Ekvalaizeris — derinti šio balso skambesį':
+        'Equalizer — tune how this voice sounds',
     'Garsas bus įrašinėjamas — balsai liks faile':
         'Audio will be recorded — your voices will remain in the file',
     'Garsas ir tekstas lieka šiame kompiuteryje':
@@ -63,6 +71,8 @@ ZODYNAS = {
         'Could not save the language: %s',
     'Kalbą galima keisti tik sustabdžius':
         'The language can only be changed when stopped',
+    'Kalbėjimo greitis — tas pats, kas pagrindiniame lange.':
+        'Speaking speed — the same as in the main window.',
     'Kas įvyks paspaudus „Gerai":\n\n1. Atsidarys naršyklė su DI padėjėjo claude.ai puslapiu. Žinutės\n   laukelyje jau bus įrašyta angliška pradžia — prisistatymas,\n   kas per programa ir ko apie ją klausiama.\n2. NEIŠSIGĄSKITE raudono pranešimo virš žinutės — claude.ai jį\n   rodo visada, kai tekstas ateina per nuorodą.\n3. Žinutės gale, po žodžių „My question:", įrašykite SAVO\n   klausimą — galima lietuviškai — ir spauskite siuntimą.\n4. Jei DI atsakys angliškai — paprašykite atsakyti jūsų kalba.\n\nPastaba: claude.ai gali paprašyti prisijungti (nemokama paskyra).\nNiekas neišsiunčiama be jūsų rankos.':
         'What happens when you press "OK":\n\n1. Your browser opens the AI assistant claude.ai. The message box\n   will already contain an English opening — an introduction to\n   what this program is and what is being asked about it.\n2. DO NOT BE ALARMED by the red notice above the message —\n   claude.ai always shows it when text arrives through a link.\n3. At the end, after the words "My question:", type YOUR OWN\n   question — in your own language — and send it.\n4. If the AI answers in English, just ask it to reply in your\n   language.\n\nNote: claude.ai may ask you to sign in (a free account).\nNothing is sent without your own hand.',
     'Klaida — žr. žurnalą (⚙)':
@@ -99,6 +109,8 @@ ZODYNAS = {
         'No answer here? Ask an AI',
     'Nustatymai':
         'Settings',
+    'Nustatymai galioja tik šiam balsui. Paleidus slankiklį pavyzdys pasigirsta iš karto. Užveskite pelę ant juostos vardo — pamatysite, už ką ji atsakinga.':
+        'These settings apply to this voice only. Release a slider and a sample plays straight away. Hover over a band name to see what it does.',
     'Padėkoti svečiui':
         'Thank the guest',
     'Padėkoti šeimininkui':
@@ -111,6 +123,8 @@ ZODYNAS = {
         'Ready — you can start',
     'Paruošti darbui':
         'Prepare',
+    'Pasiklausyti':
+        'Listen',
     'Pasiklausyti šio balso':
         'Preview this voice',
     'Pasiruošęs':
@@ -145,6 +159,8 @@ ZODYNAS = {
         'GUEST',
     'Sekretorė':
         'Secretary',
+    'Siunčiu ausis (~%d MB) — tik pirmą kartą…':
+        'Downloading the ears (~%d MB) — first time only…',
     'Stenograma išjungta':
         'Transcript off',
     'Stenogramos rašyti nepavyko — pokalbis verčiamas be jos':
@@ -155,6 +171,8 @@ ZODYNAS = {
         'Short introduction',
     'Tęsti':
         'Resume',
+    'Uždaryti':
+        'Close',
     'Užrašau…':
         'Writing…',
     'Vaizdo plokštė netinka — pereinam į procesorių…':
@@ -167,6 +185,8 @@ ZODYNAS = {
         'Translating…',
     'Visada viršuje':
         'Always on top',
+    'Visos juostos 0 dB — balsas skamba taip, kaip sukurtas':
+        'All bands at 0 dB — the voice sounds the way it was made',
     'kalbos ir balsai dar keičiami':
         'languages and voices can still be changed',
     'kiek tylos — tiek laukia':
@@ -209,4 +229,36 @@ ZODYNAS = {
         'Whisper medium — balanced',
     'Whisper large — tiksliausios':
         'Whisper large — most accurate',
+    'LT ausys — lietuviškos, be vaizdo plokštės':
+        'LT ausys — Lithuanian, no graphics card needed',
+    'GigaAM — rusiškos, be vaizdo plokštės':
+        'GigaAM — Russian, no graphics card needed',
+    'Gylis':
+        'Depth',
+    'Šiluma':
+        'Warmth',
+    'Pilnumas':
+        'Fullness',
+    'Vidurys':
+        'Mids',
+    'Aiškumas':
+        'Clarity',
+    'Ryškumas':
+        'Presence',
+    'S garsai':
+        'S sounds',
+    'Balso kūnas ir sodrumas. Per daug — balsas dunda.':
+        'Body and richness of the voice. Too much — it booms.',
+    'Šiltumas. Per daug — balsas tampa neaiškus, „purvinas".':
+        'Warmth. Too much — the voice turns unclear, "muddy".',
+    'Balso pilnumas. Per daug — skamba kaip iš kartoninės dėžės.':
+        'Fullness of the voice. Too much — it sounds like it is inside a cardboard box.',
+    'Balso branduolys. Per daug — nosinis, „telefoninis" skambesys.':
+        'The core of the voice. Too much — nasal, "telephone" sound.',
+    'Žodžių suprantamumas — čia gyvena priebalsiai.':
+        'How well words are understood — this is where consonants live.',
+    'Artumas, balsas „prie ausies". Per daug — rėžia ausį.':
+        'Closeness, the voice "right at your ear". Too much — it grates.',
+    'Gaivumas, s, š, z, ž. Per daug — švilpia; per mažai — duslu.':
+        'Freshness: s, sh, z, zh. Too much — it whistles; too little — it sounds dull.',
 }

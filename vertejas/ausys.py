@@ -68,6 +68,8 @@ for _k in _cuda_katalogai():
 
 from faster_whisper import WhisperModel
 
+from onnx_ausys import ONNX_MODELIAI, OnnxAusys, onnx_kelias, parsisiusk
+
 PAPRIKA_VIETINIS = r'D:\_Balsas Lietuviksas\_darbal\paprika-ct2-int8'
 PAPRIKA_HF = 'RobertasTa/paprika-whisper-lt-v3-ct2-int8'
 BENDRAS = 'Systran/faster-whisper-medium'
@@ -85,18 +87,28 @@ AUSYS_SARASAS = [
 AUSU_KELIAI = {'small': 'Systran/faster-whisper-small',
                'medium': 'Systran/faster-whisper-medium',
                'large-v3': 'Systran/faster-whisper-large-v3'}
+# ⭐ 2026-10-29: sekretorei — Diktuoklės 0.2 ausys (`onnx_ausys.py`), procesoriuje. Tik jai:
+# vertėjo kalbų ginčui jos neduoda `avg_logprob` (žr. `kas_ir_kuria_kalba`).
+AUSYS_SEKRETOREI = [
+    ('lt_ausys', 'LT ausys — lietuviškos, be vaizdo plokštės', 'lt', '960 MB'),
+    ('gigaam',   'GigaAM — rusiškos, be vaizdo plokštės',      'ru', '230 MB'),
+]
 # Kurios ausys siūlomos kiekvienai kalbai iš karto.
 NUMATYTOS = {'lt': 'paprika'}
+NUMATYTOS_SEKRETOREI = {'lt': 'lt_ausys', 'ru': 'gigaam'}
 NUMATYTOS_KITOMS = 'medium'
 
 
-def ausu_sarasas(kalba: str):
+def ausu_sarasas(kalba: str, sekretore: bool = False):
     """[(raktas, rodomas vardas)] — tik tos ausys, kurios tai kalbai turi prasmę."""
-    return [(r, '%s · %s' % (K.t(pav), dydis)) for r, pav, tik_kalbai, dydis in AUSYS_SARASAS
+    sarasas = (AUSYS_SEKRETOREI if sekretore else []) + AUSYS_SARASAS
+    return [(r, '%s · %s' % (K.t(pav), dydis)) for r, pav, tik_kalbai, dydis in sarasas
             if tik_kalbai is None or tik_kalbai == kalba]
 
 
-def numatytos(kalba: str):
+def numatytos(kalba: str, sekretore: bool = False):
+    if sekretore and kalba in NUMATYTOS_SEKRETOREI:
+        return NUMATYTOS_SEKRETOREI[kalba]
     return NUMATYTOS.get(kalba, NUMATYTOS_KITOMS)
 
 
@@ -114,6 +126,7 @@ class Ausys:
         self._modeliai = {}
 
     def uzkrauk(self, pranesk=None):
+        self._pranesk = pranesk
         for k in self.kalbos:
             if pranesk:
                 pranesk('Kraunu ausis (%s: %s)…' % (k, self.pasirinkimai.get(k)))
@@ -141,11 +154,14 @@ class Ausys:
         Pusė sekundės tylos — tiek, kiek daro Diktuoklė. Kaina veikiančiai plokštei
         nedidelė, o kaina jos neturinčiam žmogui — ar programa iš viso veiks.
         """
-        if self.iranga != 'cuda' or not self._modeliai:
+        # Tikrinam tik Whisper ausis: naujosios (`onnx_ausys`) sukasi procesoriuje ir
+        # `transcribe` neturi — jas „tikrinant" visos ausys be reikalo kristų į procesorių.
+        whisper = [m for m in self._modeliai.values() if isinstance(m, WhisperModel)]
+        if self.iranga != 'cuda' or not whisper:
             return
         try:
             tyla = np.zeros(8000, dtype=np.float32)
-            modelis = next(iter(self._modeliai.values()))
+            modelis = whisper[0]
             segmentai, _ = modelis.transcribe(tyla, language=self.kalbos[0],
                                               beam_size=1, vad_filter=False)
             list(segmentai)          # generatorius — be šito niekas neįvyksta
@@ -162,6 +178,14 @@ class Ausys:
     def _modelis(self, kalba):
         """Modelis pagal TOS PUSĖS pasirinkimą. Tas pats raktas dviem pusėms — vienas modelis."""
         raktas = self.pasirinkimai.get(kalba, NUMATYTOS_KITOMS)
+        if raktas not in self._modeliai and raktas in ONNX_MODELIAI:
+            kelias = onnx_kelias(raktas)
+            if kelias is None:
+                if getattr(self, '_pranesk', None):
+                    self._pranesk(K.t('Siunčiu ausis (~%d MB) — tik pirmą kartą…')
+                                  % ONNX_MODELIAI[raktas]['mb'])
+                kelias = parsisiusk(raktas)
+            self._modeliai[raktas] = OnnxAusys(raktas, kelias)
         if raktas not in self._modeliai:
             kelias = lietuviskos_ausys() if raktas == 'paprika' else AUSU_KELIAI[raktas]
             tipas = 'int8' if raktas == 'paprika' else ('float16' if self.iranga == 'cuda' else 'int8')
@@ -172,7 +196,8 @@ class Ausys:
         """Kalbą sprendžia NEŠALIŠKAS modelis: Paprika specializuota ir lietuviškai girdi
         net rusišką kalbą, todėl detekcijai ji netinka (09-12 gyvas radinys)."""
         for kalba in self.kalbos:
-            if self.pasirinkimai.get(kalba) != 'paprika':
+            # Tik bendrasis Whisper: nei Paprika, nei naujosios ausys kalbos neatpažįsta.
+            if self.pasirinkimai.get(kalba) in AUSU_KELIAI:
                 return self._modelis(kalba)
         # Abi pusės su specializuotomis ausimis — imam bendrąsias vien detekcijai.
         if 'detekcija' not in self._modeliai:
@@ -181,8 +206,17 @@ class Ausys:
                 compute_type='float16' if self.iranga == 'cuda' else 'int8')
         return self._modeliai['detekcija']
 
+    def pacios_deda_skyryba(self) -> bool:
+        """Ar VISOS pasirinktos ausys skyrybą deda pačios — tada skyrybos modelio nekraunam."""
+        return all(self.pasirinkimai.get(k) in ONNX_MODELIAI for k in self.kalbos)
+
     def klausyk(self, garsas: np.ndarray, kalba: str):
-        seg, _ = self._modelis(kalba).transcribe(
+        modelis = self._modelis(kalba)
+        if isinstance(modelis, OnnxAusys):
+            # `avg_logprob` šios ausys neduoda; sekretorei jo ir nereikia (kalba viena).
+            tekstas = modelis.atpazink(garsas)
+            return tekstas, (0.0 if tekstas else -10.0)
+        seg, _ = modelis.transcribe(
             garsas, language=kalba, beam_size=1, vad_filter=False,
             condition_on_previous_text=False)
         seg = list(seg)

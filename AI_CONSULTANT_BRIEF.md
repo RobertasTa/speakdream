@@ -52,6 +52,14 @@ in parallel **→ transcript files + audio recording**.
   (Kristijonas Jakubsonas's fine-tune trained on the LIEPA-3 corpus); other languages use the
   general Whisper `medium` by default, with `small` and `large-v3` selectable.
   Each side picks its own ears independently.
+- **Secretary ears (since 1.1.0)** are different: Lithuanian uses **LT ausys**
+  (`RobertasTa/lt-ausys`, an ONNX conversion of Kristijonas Jakubsonas's *kmynas* v4) and
+  Russian uses **GigaAM v3** (SberDevices), both through `onnx-asr`. They run **on the processor**,
+  write their own punctuation and capitals, and are the secretary's default; Whisper and Paprika
+  stay selectable there. They are **not offered in translator mode**: deciding which of two
+  languages was spoken compares the ears' confidence scores, and these ears do not produce one.
+  The same ears were measured first in the sister program Diktuoklė (Lithuanian voice commands:
+  17.9 % word errors against Paprika's 23.2 %).
 - **Punctuation** is restored between the ears and the translator. This matters more than it
   sounds: measured, it moved translation quality from 4.12 to 5.00, because without a full
   stop the translator misreads where a sentence ends.
@@ -59,7 +67,10 @@ in parallel **→ transcript files + audio recording**.
   no direct pair exists, the program goes **through English in two steps**.
 - **Voice** is Piper. The Lithuanian voice Reginutė is the authors' own work and part of the
   official Piper catalogue (`rhasspy/piper-voices`); it is downloaded on **Prepare** like
-  every other voice. Version 1.0.0 has only this one Lithuanian voice.
+  every other voice. Versions 1.0.0 and 1.1.0 have only this one Lithuanian voice.
+- **Equalizer (since 1.1.0)**: the ⚙ next to each side's Speed slider opens a 7-band equalizer
+  (125 Hz – 8 kHz, ±12 dB) for **the voice currently chosen** — settings are remembered per
+  voice. The same window has the speed slider. A flat equalizer leaves the sound untouched.
 - **Language detection**: which of the two languages was just spoken is decided by a neutral
   detector model, not by the ears themselves. This was a real bug once — a specialised model
   is equally confident when it is right and when it is wrong.
@@ -69,12 +80,14 @@ in parallel **→ transcript files + audio recording**.
 | | |
 |---|---|
 | Graphics memory, translator mode (two languages) | **3.5 GB** |
-| Graphics memory, secretary mode (one language) | **1.42 GB** |
+| Graphics memory, secretary mode with Paprika or Whisper (one language) | **1.42 GB** |
+| Secretary with LT ausys / GigaAM (1.1.0 default) | ears on the **processor**, ~0.1 s per phrase |
 | Delay from the moment a person stops speaking | **~1.7–2.0 s** for short turns |
 | Audio recording size | **23 MB per hour** (FLAC, lossless) |
 
-An NVIDIA card is needed for comfortable speed. The parts that do **not** use the graphics
-card at all: punctuation and the Piper voices — they run on the processor.
+An NVIDIA card is needed for comfortable speed **in translator mode**. The parts that do **not**
+use the graphics card at all: punctuation, the Piper voices and, since 1.1.0, the secretary's
+Lithuanian and Russian ears — they run on the processor.
 
 ### "Paruošti darbui" and "Pradėti" are two different things
 
@@ -207,6 +220,7 @@ recognises their own language in a list they otherwise cannot read.
 | **Pauzė (Pause)** | How much silence means "this person has finished a thought". Adjustable **during** the conversation — some people pause briefly, others at length |
 | **Greitis (Speed)** | Speaking rate, **separately for each side**. Added because one guest found the Russian voice too fast |
 | **Garsas (Volume)** | Per side, ±6 dB. The five built-in voices are already levelled to the same loudness; this slider is for the **room**, not for fixing the voices |
+| **⚙ Ekvalaizeris (Equalizer)** | Next to Speed (1.1.0). Seven bands for the **chosen voice**, remembered per voice; releasing a slider plays a sample. Its speed slider is the same as the main one |
 | **Prisistatyti / Padėkoti** | Separate lines for host and guest — often only the guest needs the explanation |
 | **Rašyti stenogramą** | On by default. Forgetting to switch it on loses the conversation; forgetting to switch it off only leaves a file |
 | **Įrašinėti garsą** | On by default. This is what makes every line checkable |

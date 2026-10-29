@@ -150,7 +150,7 @@ class Variklis(QObject):
     def _ar_sekretore(self):
         return self.nust.get('rezimas') == 'sekretore'
 
-    def pabandyk_balsa(self, kalba, raktas, lytis=None, greitis=1.0, garsas=1.0):
+    def pabandyk_balsa(self, kalba, raktas, lytis=None, greitis=1.0, garsas=1.0, eq=None):
         """Duoda išgirsti pasirinktą balsą (Roberto prašymas 09-18).
 
         *„Šalia balsų ko gero reiktų mažo mygtuko, kad balsą pabandyti — ar tinkamą pasirinkai,
@@ -162,16 +162,16 @@ class Variklis(QObject):
         if self._dirba or self._kraunasi or not raktas:
             return
         threading.Thread(target=self._pabandyk_fone,
-                         args=(kalba, raktas, lytis, greitis, garsas), daemon=True).start()
+                         args=(kalba, raktas, lytis, greitis, garsas, eq), daemon=True).start()
 
-    def _pabandyk_fone(self, kalba, raktas, lytis, greitis, garsas=1.0):
+    def _pabandyk_fone(self, kalba, raktas, lytis, greitis, garsas=1.0, eq=None):
         try:
             self._pranesk(K.t('Kraunu balsą…'))
             self.balsai.nustatyk(kalba, raktas, self._pranesk)
             vardas = vardas_pagal_balsa(raktas, kalba)
             tekstas = sveikinimas(kalba, vardas=vardas, lytis=lytis, trumpas=True)
             self._pranesk(K.t('Klausom: %s') % vardas, '#E8B84B')
-            g, dz = self.balsai.sakyk(kalba, tekstas, greitis, garsas)
+            g, dz = self.balsai.sakyk(kalba, tekstas, greitis, garsas, eq)
             if self.grotuvas:
                 self.grotuvas.grok(g, dz)
             self._pranesk(K.t('Pasiruošęs') if not self._paruosta
@@ -283,13 +283,18 @@ class Variklis(QObject):
         self.ausys = Ausys(kalbos=kalbos, pasirinkimai=pasirinkimai)
         self.ausys.uzkrauk(self._pranesk)
         # Skyryba tarp ausų ir vertėjo: pamatuota 4,12 → 5,00 (žr. `skyryba.py` antraštę).
-        self._pranesk(K.t('Kraunu skyrybą…'))
-        try:
-            from skyryba import Punctuator
-            self.skyryba = Punctuator()
-        except Exception as e:
+        # ⭐ Naujosios ausys (`onnx_ausys.py`, 10-29) skyrybą deda pačios — tada modelio nekraunam.
+        if self.ausys.pacios_deda_skyryba():
             self.skyryba = None
-            self._zurnalas('skyryba neužsikrovė (%s) — verčiam be jos' % str(e).splitlines()[0][:80])
+        else:
+            self._pranesk(K.t('Kraunu skyrybą…'))
+            try:
+                from skyryba import Punctuator
+                self.skyryba = Punctuator()
+            except Exception as e:
+                self.skyryba = None
+                self._zurnalas('skyryba neužsikrovė (%s) — verčiam be jos'
+                               % str(e).splitlines()[0][:80])
         # ⭐ Sekretorei vertėjo NEKRAUNAM iš viso — ji neverčia. Tai ne tik greičiau: abu
         # Marian modeliai nebeužima vaizdo atminties, o jos kiekis mums yra atskiras
         # klausimas (`BUSENA.md` — Roberto užduotis pamatuoti prieš viešinimą).
@@ -398,16 +403,17 @@ class Variklis(QObject):
         """
         if not butinai and not self._dirba:
             return False
-        greitis, garsas = 1.0, 1.0
+        greitis, garsas, eq = 1.0, 1.0, None
         if self.langas:
             puse = 'a' if kalba == self.nust.get('a_kalba') else 'b'
             try:
                 p = self.langas.a if puse == 'a' else self.langas.b
                 greitis = p.dabartinis_greitis()
                 garsas = p.dabartinis_garsas()
+                eq = self.langas.balso_eq(p.dabartinis_balsas())
             except Exception:
                 pass
-        g, dz = self.balsai.sakyk(kalba, tekstas, greitis, garsas)
+        g, dz = self.balsai.sakyk(kalba, tekstas, greitis, garsas, eq)
         # Sintezė gali trukti — per tą laiką „Baigti" jau galėjo būti paspaustas.
         if not butinai and not self._dirba:
             return False

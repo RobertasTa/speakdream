@@ -58,9 +58,15 @@ Made with care, given with joy. 🎁
   a step through English.
 - **Ears:** for Lithuanian — *Paprika*, a Whisper model fine-tuned for Lithuanian
   by Kristijonas Jakubsonas; for other languages — Whisper (faster-whisper).
+  **New in 1.1.0:** the secretary listens with *LT ausys* (Kristijonas
+  Jakubsonas's *kmynas*) in Lithuanian and *GigaAM* in Russian. Both run on the
+  processor, write their own punctuation and are faster than Paprika on a
+  graphics card. Whisper ears stay selectable.
 - **Voices:** Piper. The Lithuanian voice is *Reginutė* — trained by us and
   now part of the official Piper voice catalogue; a second Lithuanian voice is
-  on its way. A ▸ button next to each voice lets you hear it before you choose.
+  on its way. A ▸ button next to each voice lets you hear it before you choose,
+  and the ⚙ next to *Speed* (new in 1.1.0) opens an equalizer for the chosen
+  voice — seven bands, remembered per voice.
 - Adding a language: run `prideti_kalba.py <two-letter code>` in the program
   folder — it checks the real model catalogues and tells you what is possible.
   (Japanese and Korean, for example, can be *understood* but not *spoken*:
@@ -72,7 +78,7 @@ Made with care, given with joy. 🎁
 |---|---|
 | Windows | 10 or 11, 64-bit |
 | Disk | about 5 GB for the program, plus about 2.5 GB of speech models downloaded once (the exact size is shown next to each choice) |
-| Graphics card | NVIDIA recommended: 3.5 GB of video memory for the interpreter, 1.4 GB for the secretary. Without one the program falls back to the processor and works more slowly |
+| Graphics card | NVIDIA recommended for the interpreter: 3.5 GB of video memory. The secretary in Lithuanian or Russian needs none — its ears run on the processor (1.4 GB if you choose Whisper ears). Without a card the interpreter falls back to the processor and works more slowly |
 | Sound | a USB conference speakerphone on the table (tested with EMEET Luna Plus). A laptop microphone and speakers work too, at closer range |
 
 ## Install and first run
@@ -143,13 +149,18 @@ Using the program obliges you to nothing; changing it for yourself obliges you
 to nothing either. Only if you *share* a modified version does GPL ask you to
 share its source under the same terms.
 
-Why GPL and not MIT: this program is built on PyQt6 (`GPL-3.0-only`) and Piper
-(`GPL-3.0-or-later`), so GPL v3 is simply the truth about what we ship. Every
+Why GPL and not MIT: this program is built on PyQt6 (`GPL-3.0-only`), Piper
+(`GPL-3.0-or-later`) and pedalboard (`GPL-3.0`), so GPL v3 is simply the truth
+about what we ship. Every
 bundled component and model is listed in [THIRD_PARTY.md](THIRD_PARTY.md).
 
 ## Credits
 
 - **Paprika** — Lithuanian speech recognition, Kristijonas Jakubsonas (CC BY 4.0)
+- **kmynas** — Lithuanian speech recognition behind the secretary's *LT ausys*,
+  Kristijonas Jakubsonas (CC BY 4.0); ONNX conversion by us
+- **GigaAM v3** — Russian speech recognition, SberDevices (MIT)
+- **pedalboard** — the voice equalizer, Spotify (GPL v3)
 - **OPUS-MT** — translation models, University of Helsinki (CC BY 4.0)
 - **Piper** — text-to-speech engine and voice catalogue (GPL v3)
 - **faster-whisper / CTranslate2** — Whisper inference (MIT)

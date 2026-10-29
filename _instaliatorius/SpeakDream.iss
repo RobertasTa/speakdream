@@ -28,7 +28,7 @@
 ;    veikiancios programos garso gija mandagiai neuzsidaro.
 
 #define AppName      "SpeakDream"
-#define AppVersion   "1.0.0"
+#define AppVersion   "1.1.0"
 #define AppExeName   "SpeakDream.exe"
 #define AppUrl       "https://github.com/RobertasTa/speakdream"
 

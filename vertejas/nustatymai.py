@@ -19,6 +19,8 @@ NUMATYTA = {
     'a_lytis': None, 'b_lytis': None,
     'a_greitis': 100, 'b_greitis': 100,
     'a_ausys': None, 'b_ausys': None,          # None → numatytos tai kalbai
+    'sek_ausys': None,                          # sekretorės A pusė (10-29); None → naujosios
+    'eq_balsai': {},                            # {balso raktas: [7 juostos dB]} (10-29)
     'mikrofonas': None,                         # None → sistemos numatytasis
     'pauze': 10,                                # dešimtosios sekundės
     # ⭐ Prisistatymas ir padėka — KIEKVIENAI PUSEI ATSKIRAI (Roberto sumanymas 09-18):

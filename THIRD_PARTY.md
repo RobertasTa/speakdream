@@ -26,12 +26,13 @@ PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 ## Why GPL v3 and not something more permissive
 
-Not a philosophical choice — an honest one. Two components we ship are
-copyleft: **PyQt6** (`GPL-3.0-only`) and **Piper** (`GPL-3.0-or-later`). A
-program that bundles them can only be distributed under GPL v3. Everything else
-below is permissive and would have allowed MIT; these two decide.
+Not a philosophical choice — an honest one. Three components we ship are
+copyleft: **PyQt6** (`GPL-3.0-only`), **Piper** (`GPL-3.0-or-later`) and, since
+1.1.0, **pedalboard** (`GPL-3.0`, the voice equalizer). A program that bundles
+them can only be distributed under GPL v3. Everything else below is permissive
+and would have allowed MIT; these three decide.
 
-## Software components (versions as shipped in 1.0.0)
+## Software components (versions as shipped in 1.1.0)
 
 Licenses taken from each package's own metadata or project page.
 
@@ -45,7 +46,9 @@ Licenses taken from each package's own metadata or project page.
 | Transformers | 5.17 | Apache-2.0 | loads the OPUS-MT models |
 | Tokenizers | 0.23 | Apache-2.0 | tokenization for the translation models |
 | SentencePiece | 0.2 | Apache-2.0 | tokenization for the translation models |
-| ONNX Runtime | 1.30 | MIT | runs the voices and the punctuation model |
+| ONNX Runtime | 1.30 | MIT | runs the voices, the punctuation model and the secretary's ears |
+| onnx-asr | 0.12 | MIT | the secretary's Lithuanian and Russian ears (1.1.0) |
+| [pedalboard](https://github.com/spotify/pedalboard) | 0.9.26 | GPL-3.0 | voice equalizer (1.1.0); includes JUCE (GPL-3.0) |
 | huggingface_hub | 1.31 | Apache-2.0 | downloads models on first use |
 | sounddevice | 0.5 | MIT | microphone and speaker access |
 | soundfile (libsndfile) | 0.14 | BSD-3-Clause / LGPL-2.1 (libsndfile) | writes the FLAC recording |
@@ -58,6 +61,8 @@ Licenses taken from each package's own metadata or project page.
 | Model | Author | License | Used for |
 |---|---|---|---|
 | `RobertasTa/paprika-whisper-lt-v3-ct2-int8` (Paprika) | Kristijonas Jakubsonas; CTranslate2 conversion by the authors | CC BY 4.0 | Lithuanian ears |
+| `RobertasTa/lt-ausys` (LT ausys) | Kristijonas Jakubsonas (kmynas v4, fine-tuned from NVIDIA `parakeet-tdt-0.6b-v3` on LIEPA-3); ONNX int8 conversion by the authors | CC BY 4.0 | the secretary's Lithuanian ears (1.1.0) |
+| `istupakov/gigaam-v3-onnx` (GigaAM v3 e2e) | SberDevices; ONNX conversion by istupakov | MIT | the secretary's Russian ears (1.1.0) |
 | Whisper `medium` (via faster-whisper) | OpenAI | MIT | ears for other languages, language detection |
 | `Helsinki-NLP/opus-mt-tc-base-zle-bat`, `…-bat-zle`, `…-tc-big-en-lt`, `…-tc-big-lt-en`, `…-tc-bible-big-deu_eng_fra_por_spa-bat`, `…-bat-deu_eng_nld`, `opus-mt-en-ru`, `ru-en`, `en-de`, `de-en`, `zh-en`, `en-zh` | University of Helsinki (OPUS-MT) | CC BY 4.0 | translation |
 | `1-800-BAD-CODE/xlm-roberta_punctuation_fullstop_truecase` | 1-800-BAD-CODE | Apache-2.0 | punctuation and casing before translation |

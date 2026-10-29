@@ -183,6 +183,16 @@ QSlider::groove:horizontal:disabled { background: #2a2a2a; }
 QSlider::handle:horizontal:disabled { background: #5a5a5a; }
 QSlider::sub-page:horizontal:disabled { background: #3a3a3a; }
 QFrame#skirtukas { background: #303030; }
+/* Ekvalaizerio slankikliai (10-29) — iš Skaityklės, tos pačios spalvos. */
+QSlider::groove:vertical { width: 4px; background: #3a3a3a; border-radius: 2px; }
+QSlider::handle:vertical { background: #c8c8c8; width: 14px; height: 14px;
+                           margin: 0 -5px; border-radius: 7px; }
+QSlider::handle:vertical:hover { background: #ffffff; }
+/* Dantratis prie „Greitis" — be dėžės, kad eilutė nepaaukštėtų (lango aukštis pamatuotas). */
+QPushButton#eq { background: transparent; padding: 0px; font-size: 13px; color: #9a9a9a;
+                 font-family: 'Segoe UI Symbol'; }
+QPushButton#eq:hover { background: transparent; color: #ffffff; }
+QPushButton#eq:disabled { background: transparent; color: #5a5a5a; }
 """
 
 
@@ -316,9 +326,12 @@ class Pasnekovas(QWidget):
 
     pakeista = pyqtSignal()
     balsas_bandomas = pyqtSignal()      # paspaustas ▸ prie balso (09-18)
+    ekvalaizeris_atidaromas = pyqtSignal()   # paspaustas ⚙ prie greičio (10-29)
 
     def __init__(self, antraste: str, kalba: str, parent=None, desineje=None):
         super().__init__(parent)
+        # Sekretorei siūlomos ir naujosios ausys (10-29); nustato `Langas._ausys_pagal_rezima`.
+        self.sekretore = False
         v = QVBoxLayout(self)
         v.setContentsMargins(0, 0, 0, 0)
         v.setSpacing(5)
@@ -389,6 +402,18 @@ class Pasnekovas(QWidget):
         self.greicio_reiksme.setObjectName('uzuomina')
         self.greicio_reiksme.setFixedWidth(38)
         gr.addWidget(self.greicio_reiksme)
+        # ⚙ — ekvalaizeris ŠIAM balsui (Roberto pasiūlymas 10-29: „prie slinktuko greitis —
+        # dantratį, kad kiekvieną balsą su ekvalaizeriu būtų galima derint pagal savo norus").
+        # Šriftas „Segoe UI Symbol" (stiliuje) — ⚙ kaip vienspalvis ženklas, ne spalvotas
+        # jaustukas: tik taip jį dažo stilius ir sekretorės režimu jis pilkėja su svečio puse.
+        self.eq = QPushButton('⚙')
+        self.eq.setObjectName('eq')
+        self.eq.setFixedSize(18, 18)
+        self.eq.setToolTip(K.t('Ekvalaizeris — derinti šio balso skambesį'))
+        self.eq.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.eq.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.eq.clicked.connect(lambda: self.ekvalaizeris_atidaromas.emit())
+        gr.addWidget(self.eq)
         v.addLayout(gr)
         # Garsumas kiekvienai pusei ATSKIRAI (Roberto prašymas 09-18). ⛔ Tai NE balsų
         # sulyginimas — tas jau padarytas `balsas.py` (visi penki suvesti į vieną LUFS
@@ -410,6 +435,7 @@ class Pasnekovas(QWidget):
         self.garso_reiksme.setObjectName('uzuomina')
         self.garso_reiksme.setFixedWidth(38)
         ga.addWidget(self.garso_reiksme)
+        ga.addSpacing(18 + ga.spacing())    # dantračio vieta — kad abu slankikliai būtų vienodi
         v.addLayout(ga)
         self.kalba.currentIndexChanged.connect(self._kalba_pakeista)
         self.balsas.currentIndexChanged.connect(self._balsas_pakeistas)
@@ -454,13 +480,14 @@ class Pasnekovas(QWidget):
 
     def uzpildyk_ausis(self, pasirinkta=None):
         kalba = self.dabartine_kalba()
-        dabar = pasirinkta or self.ausys.currentData() or numatytos(kalba)
+        dabar = pasirinkta or self.ausys.currentData() or numatytos(kalba, self.sekretore)
         self.ausys.blockSignals(True)
         self.ausys.clear()
-        for raktas, pav in ausu_sarasas(kalba):
+        for raktas, pav in ausu_sarasas(kalba, self.sekretore):
             self.ausys.addItem(pav, raktas)
         i = self.ausys.findData(dabar)
-        self.ausys.setCurrentIndex(i if i >= 0 else max(0, self.ausys.findData(numatytos(kalba))))
+        self.ausys.setCurrentIndex(i if i >= 0 else max(0, self.ausys.findData(
+            numatytos(kalba, self.sekretore))))
         self.ausys.blockSignals(False)
 
     def dabartinis_greitis(self) -> float:
@@ -694,11 +721,20 @@ class Langas(QWidget):
                      ('sveikintis_a', 'sveikintis_b', 'trumpai',
                       'atsisveikinti_a', 'atsisveikinti_b', 'tekstas', 'zurnalas', 'virsuje',
                       'stenograma', 'garso_irasas')}
+        # Ekvalaizeris KIEKVIENAM BALSUI (10-29): {balso raktas: [7 juostos, dB]}.
+        self.eq_balsai = dict(self.issaugota.get('eq_balsai') or {})
+        # A pusės ausys — atskirai kiekvienam režimui (10-29): sekretorei siūlomos naujosios
+        # (`onnx_ausys.py`), vertėjui lieka jo paties pasirinkimas.
+        self._ausys_rezimui = {'vertejas': self.issaugota.get('a_ausys'),
+                               'sekretore': self.issaugota.get('sek_ausys')}
+        self._ausu_rezimas = None
 
         self.a.pakeista.connect(self._kalbos_pakeistos)
         self.b.pakeista.connect(self._kalbos_pakeistos)
         self.a.balsas_bandomas.connect(lambda: self._balsas_bandomas(self.a))
         self.b.balsas_bandomas.connect(lambda: self._balsas_bandomas(self.b))
+        self.a.ekvalaizeris_atidaromas.connect(lambda: self._ekvalaizeris(self.a))
+        self.b.ekvalaizeris_atidaromas.connect(lambda: self._ekvalaizeris(self.b))
         # „Pradėti" atsirakina tik paruošus (Roberto sprendimas 09-18: Play = jau dirbam).
         self.paruosta = False
         self.pradeti.setEnabled(False)
@@ -778,7 +814,8 @@ class Langas(QWidget):
                     puse.lytis.setCurrentIndex(j)
             puse.greitis.setValue(int(self.issaugota.get(zyme + '_greitis', 100)))
             puse.garsas.setValue(int(self.issaugota.get(zyme + '_garsas', 0)))
-            puse.uzpildyk_ausis(self.issaugota.get(zyme + '_ausys'))
+            puse.uzpildyk_ausis(self._ausys_rezimui.get(self.rezimas) if zyme == 'a'
+                                else self.issaugota.get(zyme + '_ausys'))
 
     def _kalbos_pakeistos(self):
         # Apsauga nuo rekursijos: balsų sąrašo perpildymas pats sukelia `pakeista`,
@@ -905,10 +942,37 @@ class Langas(QWidget):
     def _balsas_bandomas(self, puse):
         if not (self.variklis and hasattr(self.variklis, 'pabandyk_balsa')):
             return
-        # Su garsumu — kitaip ▸ meluotų: girdėtum ne tą garsą, kurį išgirs kambarys.
+        # Su garsumu ir ekvalaizeriu — kitaip ▸ meluotų: girdėtum ne tą garsą, kurį išgirs kambarys.
         self.variklis.pabandyk_balsa(puse.dabartine_kalba(), puse.dabartinis_balsas(),
                                      puse.dabartine_lytis(), puse.dabartinis_greitis(),
-                                     puse.dabartinis_garsas())
+                                     puse.dabartinis_garsas(),
+                                     self.balso_eq(puse.dabartinis_balsas()))
+
+    def balso_eq(self, raktas):
+        """To balso ekvalaizeris arba None (lygus — garsas nepaliečiamas)."""
+        return self.eq_balsai.get(raktas) if raktas else None
+
+    def _ekvalaizeris(self, puse):
+        """⚙ prie „Greitis" — ekvalaizeris TAM balsui, kuris dabar pasirinktas (10-29)."""
+        raktas = puse.dabartinis_balsas()
+        if not raktas:
+            return
+        from ekvalaizerio_langas import EkvalaizerioLangas
+        d = EkvalaizerioLangas(self, puse.balsas.currentText(), self.eq_balsai.get(raktas),
+                               puse.greitis.value())
+        # Greitis lange — ta pati pusės reikšmė (Roberto 10-29: „kaip Skaityklėje").
+        d.greitis_pakeistas.connect(puse.greitis.setValue)
+
+        def pakeista():
+            eq = d.eq()
+            if any(eq):
+                self.eq_balsai[raktas] = eq
+            else:
+                self.eq_balsai.pop(raktas, None)
+        d.pakeista.connect(pakeista)
+        d.klausyti.connect(lambda: self._balsas_bandomas(puse))
+        d.exec()
+        self.issaugok()
 
     def _rezimas_pasirinktas(self, kuris):
         """Režimas keičiamas TIK tarp pokalbių: vidury pokalbio tai reikštų kitą programą."""
@@ -941,8 +1005,22 @@ class Langas(QWidget):
         # patikslinimas: „tame tarpe ir greičio juosta") — IŠSKYRUS patį perjungiklį,
         # kitaip iš sekretorės nebebūtų kaip grįžti.
         self.b.blankink(sekretore)
+        self._ausys_pagal_rezima()
         self._uzrakink(self.dirba)
         self.setWindowTitle('SpeakDream — ' + (K.t('Sekretorė') if sekretore else K.t('Vertėjas')))
+
+    def _ausys_pagal_rezima(self):
+        """A pusės ausų sąrašas priklauso nuo režimo (10-29): sekretorei — ir naujosios ausys,
+        procesoriuje (`onnx_ausys.py`). Kiekvienas režimas atsimena SAVO pasirinkimą, kad
+        sekretorės ausys nepersikeltų į vertėją, kurio kalbų ginčas joms netinka."""
+        if self._ausu_rezimas == self.rezimas:
+            return
+        if self._ausu_rezimas is not None:
+            self._ausys_rezimui[self._ausu_rezimas] = self.a.dabartines_ausys()
+        self._ausu_rezimas = self.rezimas
+        self.a.sekretore = self.rezimas == 'sekretore'
+        self.a.uzpildyk_ausis(self._ausys_rezimui.get(self.rezimas)
+                              or numatytos(self.a.dabartine_kalba(), self.a.sekretore))
 
     def _perjunk(self, raktas, ar, veiksmas=None):
         self.nust[raktas] = ar
@@ -1237,12 +1315,16 @@ class Langas(QWidget):
             self.b.blankink(True)
 
     def issaugok(self):
+        # A pusės ausys saugomos KIEKVIENAM režimui atskirai (žr. `_ausys_pagal_rezima`).
+        self._ausys_rezimui[self.rezimas] = self.a.dabartines_ausys()
         d = {'a_kalba': self.a.dabartine_kalba(), 'b_kalba': self.b.dabartine_kalba(),
              'a_balsas': self.a.dabartinis_balsas(), 'b_balsas': self.b.dabartinis_balsas(),
              'a_lytis': self.a.lytis.currentData(), 'b_lytis': self.b.lytis.currentData(),
              'a_greitis': self.a.greitis.value(), 'b_greitis': self.b.greitis.value(),
              'a_garsas': self.a.garsas.value(), 'b_garsas': self.b.garsas.value(),
-             'a_ausys': self.a.dabartines_ausys(), 'b_ausys': self.b.dabartines_ausys(),
+             'a_ausys': self._ausys_rezimui.get('vertejas'), 'b_ausys': self.b.dabartines_ausys(),
+             'sek_ausys': self._ausys_rezimui.get('sekretore'),
+             'eq_balsai': self.eq_balsai,
              'mikrofonas': self.mikrofonas.currentData(),
              'pauze': self.slankiklis.value(),
              'rezimas': self.rezimas,

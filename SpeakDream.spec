@@ -50,12 +50,17 @@ sp_d, sp_b, sp_h = collect_all("sentencepiece")
 piper_d, piper_b, piper_h = collect_all("piper")
 sd_d, sd_b, sd_h = collect_all("sounddevice")
 sf_d, sf_b, sf_h = collect_all("soundfile")
+# 2026-10-29: naujosios sekretorės ausys (`onnx_ausys.py`) ir ekvalaizeris (`ekvalaizeris.py`).
+# `onnx_asr` turi SAVO .onnx duomenų failus (`preprocessors\data`) — be collect_all jų nebūtų
+# (Diktuoklės 0.2 receptas). `pedalboard` — kaip Skaityklėje, su `pedalboard_native`.
+oa_d, oa_b, oa_h = collect_all("onnx_asr")
+pb_d, pb_b, pb_h = collect_all("pedalboard")
 
 a = Analysis(
     [f"{KATALOGAS}/main.py"],
     pathex=[KATALOGAS],
     binaries=(torch_b + tr_b + ct2_b + ort_b + fw_b + hf_b + sp_b + piper_b
-              + sd_b + sf_b),
+              + sd_b + sf_b + oa_b + pb_b),
     datas=[
         (f"{KATALOGAS}/SpeakDream.ico", "."),
         # ⭐ Konsultanto tiesos failas ir kalbų patikros įrankis. Jie reikalingi ne programai,
@@ -73,15 +78,18 @@ a = Analysis(
         # 2026-09-23 v1.0.0: tik Reginutes konfigas (modelis — is Piper katalogo). Ingutes
         # .onnx NEDEDAM, kol ji nepublikuota; grazinant — vel visas `balsai` katalogas.
         (f"{KATALOGAS}/balsai/lt_LT-reginute1-medium.onnx.json", "balsai"),
-    ] + torch_d + tr_d + ct2_d + ort_d + fw_d + hf_d + sp_d + piper_d + sd_d + sf_d,
+    ] + torch_d + tr_d + ct2_d + ort_d + fw_d + hf_d + sp_d + piper_d + sd_d + sf_d
+      + oa_d + pb_d,
     hiddenimports=(
         # Musu paciu moduliai. Kalbu zodynai kraunami per `__import__` (kalba.py),
         # tad PyInstaller ju NERANDA — juos butina isvardyti, kitaip pakete sasaja
         # butu tik lietuviska, ir tai nesimatytu iki pirmo paleidimo svetima kalba.
         ["kalba", "kalba_en", "kalba_ru", "kalba_de",
          "ausys", "balsas", "frazes", "garsas", "garso_irasas",
-         "langas", "nustatymai", "skyryba", "stenograma", "variklis", "vertimas"]
+         "langas", "nustatymai", "skyryba", "stenograma", "variklis", "vertimas",
+         "onnx_ausys", "ekvalaizeris", "ekvalaizerio_langas", "pedalboard_native"]
         + torch_h + tr_h + ct2_h + ort_h + fw_h + hf_h + sp_h + piper_h + sd_h + sf_h
+        + oa_h + pb_h
         + collect_submodules("PyQt6")
     ),
     hookspath=[],
