@@ -70,6 +70,10 @@ speed slider too. A flat equalizer leaves the voice exactly as it was made.
   Jakubsonas's *kmynas*) in Lithuanian and *GigaAM* in Russian. Both run on the
   processor, write their own punctuation and are faster than Paprika on a
   graphics card. Whisper ears stay selectable.
+  **1.1.1:** a fresh 1.1.0 install could not recognise Lithuanian, because the
+  LT ausys repository got a new model on 15 November 2026; the secretary now
+  takes *kmynas* from the fixed revision `v1-kmynas` — it writes full stops, the
+  new model hardly does.
 - **Voices:** Piper. Two Lithuanian voices, both ours and both in the official
   Piper voice catalogue: *Reginutė*, and since 1.1.0 *Ingutė*, grown from the
   Reginutė model with our Python tools. A ▸ button next to each voice lets you hear it before you choose,

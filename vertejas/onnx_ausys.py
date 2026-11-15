@@ -36,9 +36,15 @@ MAX_S = 20                  # Diktuoklės spike: gabalai 9–21 s, nė vieno nuk
 # Iš HF imam TIK int8 failus: lt-ausys repo turi ir fp32 (2,5 GB), gigaam — dar penkis
 # variantus. Failų sąrašas = tai, ko onnx-asr 0.12.0 ieško (patikrinta Diktuoklėje 10-25).
 # Dydžiai — HF API 2026-10-25, apvalinti į didesnę pusę.
+#
+# ⛔ 1.1.1 (2026-11-15): `RobertasTa/lt-ausys` main nuo 14:27 — Datolabs Upelis (RNN-T). 1.1.0 jį
+# parsisiųsdavo ir krovė kaip TDT — atpažinimas lūždavo. Žodžiais Upelis tikslesnis, bet ilgoje
+# kalboje beveik nededa taškų (Diktuoklės matavimas: sakinių ribos F1 5,5 % prieš kmyno 89,9 %), o
+# sekretorė rašo tekstą, kurį žmogus skaito ir verčia — lieka kmynas: revizija `v1-kmynas`.
 ONNX_MODELIAI = {
     'lt_ausys': {
         'repo': 'RobertasTa/lt-ausys',
+        'revizija': 'v1-kmynas',
         'tipas': 'nemo-conformer-tdt',
         'failai': ['config.json', 'vocab.txt', 'encoder-model.int8.onnx',
                    'decoder_joint-model.int8.onnx'],
@@ -63,9 +69,24 @@ def onnx_kelias(raktas):
     """Katalogas, kuriame guli VISI modelio failai, arba None. Tikrinam kiekvieną failą:
     nutrūkęs parsisiuntimas palieka pusę katalogo."""
     k = _katalogas(raktas)
-    if all(os.path.isfile(os.path.join(k, f)) for f in ONNX_MODELIAI[raktas]['failai']):
+    if all(os.path.isfile(os.path.join(k, f)) for f in ONNX_MODELIAI[raktas]['failai']) \
+            and _tinka_tipas(raktas, k):
         return k
     return None
+
+
+def _tinka_tipas(raktas, katalogas):
+    """1.1.1: 1.1.0, ruošta 2026-11-15 po 14:27, iš HF main gavo Upelį (RNN-T), o krauna jį kaip kmyną
+    (TDT) — atpažinimas lūžta. Tokie failai = netinka: bus parsiųstas kmynas iš revizijos ant viršaus.
+    Tik lt_ausys — GigaAM config.json tipas kitoks, nei renkamės mes."""
+    if raktas != 'lt_ausys':
+        return True
+    try:
+        import json
+        with open(os.path.join(katalogas, 'config.json'), encoding='utf-8') as f:
+            return json.load(f).get('model_type') == ONNX_MODELIAI[raktas]['tipas']
+    except (OSError, ValueError):
+        return True                      # nėra ko lyginti — kaip iki 1.1.1
 
 
 def parsisiusk(raktas):
@@ -74,7 +95,7 @@ def parsisiusk(raktas):
     m = ONNX_MODELIAI[raktas]
     vieta = _katalogas(raktas)
     os.makedirs(vieta, exist_ok=True)
-    snapshot_download(m['repo'], local_dir=vieta, allow_patterns=m['failai'])
+    snapshot_download(m['repo'], local_dir=vieta, allow_patterns=m['failai'], revision=m.get('revizija'))
     return vieta
 
 

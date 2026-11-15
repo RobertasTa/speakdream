@@ -61,7 +61,7 @@ Licenses taken from each package's own metadata or project page.
 | Model | Author | License | Used for |
 |---|---|---|---|
 | `RobertasTa/paprika-whisper-lt-v3-ct2-int8` (Paprika) | Kristijonas Jakubsonas; CTranslate2 conversion by the authors | CC BY 4.0 | Lithuanian ears |
-| `RobertasTa/lt-ausys` (LT ausys) | Kristijonas Jakubsonas (kmynas v4, fine-tuned from NVIDIA `parakeet-tdt-0.6b-v3` on LIEPA-3); ONNX int8 conversion by the authors | CC BY 4.0 | the secretary's Lithuanian ears (1.1.0) |
+| `RobertasTa/lt-ausys`, revision `v1-kmynas` (LT ausys) | Kristijonas Jakubsonas (kmynas v4, fine-tuned from NVIDIA `parakeet-tdt-0.6b-v3` on LIEPA-3); ONNX int8 conversion by the authors | CC BY 4.0 | the secretary's Lithuanian ears (1.1.0) |
 | `istupakov/gigaam-v3-onnx` (GigaAM v3 e2e) | SberDevices; ONNX conversion by istupakov | MIT | the secretary's Russian ears (1.1.0) |
 | Whisper `medium` (via faster-whisper) | OpenAI | MIT | ears for other languages, language detection |
 | `Helsinki-NLP/opus-mt-tc-base-zle-bat`, `…-bat-zle`, `…-tc-big-en-lt`, `…-tc-big-lt-en`, `…-tc-bible-big-deu_eng_fra_por_spa-bat`, `…-bat-deu_eng_nld`, `opus-mt-en-ru`, `ru-en`, `en-de`, `de-en`, `zh-en`, `en-zh` | University of Helsinki (OPUS-MT) | CC BY 4.0 | translation |

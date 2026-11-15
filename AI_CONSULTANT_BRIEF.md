@@ -53,7 +53,9 @@ in parallel **→ transcript files + audio recording**.
   general Whisper `medium` by default, with `small` and `large-v3` selectable.
   Each side picks its own ears independently.
 - **Secretary ears (since 1.1.0)** are different: Lithuanian uses **LT ausys**
-  (`RobertasTa/lt-ausys`, an ONNX conversion of Kristijonas Jakubsonas's *kmynas* v4) and
+  (`RobertasTa/lt-ausys`, **revision `v1-kmynas`** since 1.1.1 — the repo's main branch holds Datolabs' Upelis since
+  2026-11-15, which 1.1.0 downloaded and could not load; it also hardly writes full stops — an ONNX conversion of
+  Kristijonas Jakubsonas's *kmynas* v4) and
   Russian uses **GigaAM v3** (SberDevices), both through `onnx-asr`. They run **on the processor**,
   write their own punctuation and capitals, and are the secretary's default; Whisper and Paprika
   stay selectable there. They are **not offered in translator mode**: deciding which of two
