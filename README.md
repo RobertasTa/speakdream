@@ -31,6 +31,9 @@ Made with care, given with joy. 🎁
 - **The transcript is evidence, not a summary.** Nothing is paraphrased, nothing
   is invented; timestamps match the audio recording to the second.
 
+Exactly what is stored where, and the one connection the program makes on its
+own (Hugging Face, to download models): **[privacy policy](https://robertasta.github.io/speakdream/privacy.html)**.
+
 ## Three in one
 
 1. **Live voice interpreter.** Two people, two languages, one conference
@@ -100,6 +103,11 @@ speed slider too. A flat equalizer leaves the voice exactly as it was made.
    It installs into your user profile — no administrator rights needed. The
    installer is about 2 GB: the translation engine ships with its own GPU
    libraries, so nothing else needs installing.
+   Or with the Windows Package Manager:
+
+   ```
+   winget install RobertasTa.SpeakDream
+   ```
 2. Plug in the speakerphone. Windows usually makes it the default microphone and
    speaker by itself; if not, do that in Sound settings. The program remembers
    the microphone **by name**, so it survives cable/dongle changes.

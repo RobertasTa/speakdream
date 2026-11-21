@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpeakDream — privacy policy</title>
+<meta name="description" content="SpeakDream privacy policy: no accounts, no analytics, no telemetry. Your conversations, transcripts and recordings stay on your PC. The only connection the program makes on its own is to Hugging Face, to download speech models.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<style>
+  :root{
+    --bg:#010d24; --bg2:#06173a; --card:#0b1f47;
+    --text:#f5f7fc; --muted:#bcc4d6; --amber:#e8b84b; --line:#1d3560; --blue:#4f9cf7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6}
+  a{color:var(--amber)}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  header{padding:48px 0 28px;text-align:center}
+  header img.icon{width:72px;height:72px;margin-bottom:14px}
+  h1{font-size:2rem;font-weight:700;letter-spacing:.5px}
+  .tagline{font-size:1.1rem;color:var(--muted);margin-top:8px}
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  h2{font-size:1.3rem;margin-bottom:14px}
+  p{margin-bottom:12px}
+  ul{margin:0 0 12px 22px}
+  li{margin-bottom:8px}
+  .muted{color:var(--muted)}
+  .short{background:var(--card);border:1px solid var(--blue);border-radius:10px;padding:20px}
+  .short p:last-child{margin-bottom:0}
+  code{font-family:Consolas,"Cascadia Mono",monospace;font-size:.92em;background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;overflow-wrap:anywhere}
+  footer{padding:30px 0 44px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
+  footer .sig{color:var(--amber);font-style:italic;margin-top:6px}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <a href="index.html"><img class="icon" src="icon-96.png" alt="SpeakDream icon"></a>
+  <h1>Privacy policy</h1>
+  <p class="tagline">SpeakDream — what stays on your PC, and the one thing that goes over the internet</p>
+</header>
+
+<section class="wrap">
+  <div class="short">
+    <p><b>The short version.</b> SpeakDream collects nothing about you. There are no accounts, no analytics, no ads, no crash reports and no telemetry of its own. Your speech is recognised, translated and voiced on your own computer; your conversations, transcripts and recordings never leave it.</p>
+    <p>The only connection the program makes on its own is to <b>Hugging Face</b>, to download the speech models and voices. Nothing about you or your conversations is sent there.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What is stored on your PC, and where</h2>
+  <ul>
+    <li><b>Transcripts and audio recordings</b> — in the <code>Stenogramos</code> folder next to the program (by default <code>%LOCALAPPDATA%\Programs\SpeakDream\Stenogramos</code>), one subfolder per conversation. Both are on by default, and the speakerphone announces aloud, in each conversation language, that the conversation is being recorded — after Start and again after Stop. The audio recording can be switched off in the ⚙ menu, and so can the transcript in interpreter mode (the secretary <i>is</i> the transcript, so there it always stays on). As long as anything is being recorded, the announcement cannot be switched off.</li>
+    <li><b>Debug log</b> — <code>%LOCALAPPDATA%\SpeakDream\vertejas.log</code>. It is on by default and records, with times, what the ears heard and how it was translated, so that a problem can be traced afterwards. Switch it off in ⚙ → <i>Write the debug log</i>; delete the file whenever you like.</li>
+    <li><b>Settings</b> — <code>%LOCALAPPDATA%\SpeakDream\nustatymai.json</code>: the chosen languages, ears and voices, the microphone's name, the sliders and the equalizer.</li>
+    <li><b>Speech models</b> — <code>%LOCALAPPDATA%\SpeakDream\modeliai</code> and the Hugging Face cache (by default <code>%USERPROFILE%\.cache\huggingface</code>). These are the downloaded models, not your data.</li>
+  </ul>
+  <p>None of these files is ever sent anywhere by SpeakDream.</p>
+</section>
+
+<section class="wrap">
+  <h2>What goes over the internet</h2>
+  <ul>
+    <li><b>Hugging Face (huggingface.co).</b> When you press <i>Prepare</i> for the first time with a language, the program downloads that language's models. While the PC is online, it also fetches the list of Piper voices at start-up and checks whether the model files it already has are current. These are ordinary file downloads: no audio, text, transcript or setting goes with them. As with any download, Hugging Face receives your IP address and the standard request headers of the download library (such as its version). See the <a href="https://huggingface.co/privacy">Hugging Face privacy policy</a>.</li>
+    <li><b>Nothing else.</b> SpeakDream does not check for updates, does not report crashes and does not count how it is used.</li>
+  </ul>
+  <p>Once the models are downloaded, the program works without any internet connection at all.</p>
+  <p><b>Two buttons open your web browser — only when you press them.</b> The <i>?</i> button → <i>No answer here? Ask an AI</i> opens claude.ai with a prepared English message that describes the program. That message contains nothing about you or your conversations, and nothing is sent until you add your question and press send yourself. <i>Creator's page</i> opens GitHub. From that moment, that website's own privacy policy applies.</p>
+</section>
+
+<section class="wrap">
+  <h2>Recording other people</h2>
+  <p>Where you live, recording a conversation may require the consent of everyone taking part. SpeakDream helps by announcing the recording aloud in each conversation language, and it never records secretly — but the decision to record, and to keep the files, is yours.</p>
+</section>
+
+<section class="wrap">
+  <h2>Removing your data</h2>
+  <p>Uninstalling SpeakDream removes the program but deliberately keeps your transcripts, recordings, settings, log and models, so that your documents are never deleted by surprise and a reinstall does not have to download the models again. To remove everything, delete these folders after uninstalling:</p>
+  <ul>
+    <li><code>%LOCALAPPDATA%\Programs\SpeakDream</code> (with <code>Stenogramos</code> inside)</li>
+    <li><code>%LOCALAPPDATA%\SpeakDream</code></li>
+    <li>the SpeakDream models in <code>%USERPROFILE%\.cache\huggingface</code>, if no other program uses that cache</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2>This website</h2>
+  <p>This is a static page hosted on GitHub Pages and mirrored on Hugging Face Spaces. It sets no cookies and runs no analytics or trackers of our own. The hosts keep their own server logs under their own policies.</p>
+</section>
+
+<section class="wrap">
+  <h2>Questions</h2>
+  <p>Ask in the project's <a href="https://github.com/RobertasTa/speakdream/issues">GitHub issues</a>. The source code is open, so every statement on this page can be checked.</p>
+  <p class="muted">Last updated 21 November 2026, for SpeakDream 1.1.1.</p>
+</section>
+
+<footer class="wrap">
+  <p><a href="index.html">SpeakDream</a> ·
+     <a href="https://github.com/RobertasTa/speakdream">GitHub</a> ·
+     <a href="https://github.com/RobertasTa/speakdream/blob/master/LICENSE">GPL v3</a></p>
+  <p class="sig">A gift from Claude &amp; Robertas</p>
+</footer>
+
+<script>
+  // Hugging Face Space rodo puslapį rėmelyje, o GitHub ir kitos svetainės jame neatsidaro — atidarom naujoje kortelėje.
+  if (window.top !== window.self) {
+    for (const a of document.querySelectorAll('a[href^="http"]')) { a.target = '_blank'; a.rel = 'noopener'; }
+  }
+</script>
+</body>
+</html>
